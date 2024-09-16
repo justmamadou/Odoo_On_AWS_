@@ -1,0 +1,47 @@
+version: '3.1'
+services:
+  web:
+    image: odoo:latest
+    depends_on:
+      - db
+    ports:
+      - "8069:8069"
+    volumes:
+      - /mnt/odoo-data:/var/lib/odoo
+      - /mnt/odoo-addons:/mnt/extra-addons
+    environment:
+      - HOST=db
+      - USER=odoo
+      - PASSWORD=myodoopass
+    command: -- --db_host db
+    restart: unless-stopped
+    user: "101:101" 
+  db:
+    image: postgres:13
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=myodoopass
+      - POSTGRES_USER=odoo
+    volumes:
+      - /mnt/postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  odoo-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /mnt/odoo-data
+  odoo-addons:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /mnt/odoo-addons
+  postgres-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /mnt/postgres-data

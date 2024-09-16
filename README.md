@@ -38,7 +38,15 @@ lsblk
 2.3. Formatez les volumes (si nécessaire) et montez-les :
 ```bash
 sudo mkfs -t ext4 /dev/xvdf
+sudo mkfs -t ext4 /dev/xvdg
+sudo mkfs -t ext4 /dev/xvdh
+```
+
+```bash
 sudo mkdir -p /mnt/odoo-data /mnt/odoo-addons /mnt/postgres-data
+```
+
+```bash
 sudo mount /dev/xvdf /mnt/odoo-data
 sudo mount /dev/xvdg /mnt/odoo-addons
 sudo mount /dev/xvdh /mnt/postgres-data
